@@ -8,6 +8,7 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+app.MapControllers();
 
 if (app.Environment.IsDevelopment())
 {
