@@ -23,6 +23,7 @@ public class UserMap : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.Email)
             .IsRequired()
+            .HasColumnName("Email")
             .HasColumnType("VARCHAR")
             .HasMaxLength(160);
 
@@ -32,12 +33,12 @@ public class UserMap : IEntityTypeConfiguration<User>
             .HasMaxLength(255);
 
         builder.Property(u => u.Bio)
-            .IsRequired()
+            .IsRequired(false)
             .HasColumnType("NVARCHAR")
             .HasMaxLength(500);
 
         builder.Property(u => u.Image)
-            .IsRequired()
+            .IsRequired(false)
             .HasColumnType("VARCHAR")
             .HasMaxLength(255);
 
