@@ -35,10 +35,21 @@ public class CategoryController : ControllerBase
     [FromBody] Category category,
     [FromServices] AppDbContext context)
     {
-        await context.Categories.AddAsync(category);
-        await context.SaveChangesAsync();
+        try
+        {
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
 
-        return Created($"v1/categories/{category.Id}", category);
+            return Created($"v1/categories/{category.Id}", category);
+        }
+        catch (DbUpdateException dbEx)
+        {
+            return StatusCode(500, "05XE9 - Nao foi possivel incluir a Categoria");
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, "05XE10 - Falha interna no servidor");
+        }
     }
 
     [HttpPut("v1/categories/{id:int}")]
