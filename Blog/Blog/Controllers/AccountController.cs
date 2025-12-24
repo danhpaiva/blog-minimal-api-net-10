@@ -51,9 +51,34 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("v1/accounts/login")]
-    public IActionResult Login([FromServices] TokenService tokenService)
+    public async Task<IActionResult> Login(
+        [FromBody] LoginViewModel loginViewModel,
+        [FromServices] AppDbContext context,
+        [FromServices] TokenService tokenService)
     {
-        var token = tokenService.GenerateToken(null);
-        return Ok(token);
+        if (!ModelState.IsValid)
+            return BadRequest(new ResultViewModel<string>(ModelState.GetErrors()));
+
+        var user = await context
+            .Users
+            .AsNoTracking()
+            .Include(u => u.Roles)
+            .FirstOrDefaultAsync(u => u.Email == loginViewModel.Email);
+
+        if (user == null)
+            return StatusCode(401, new ResultViewModel<string>("06XE03 - Usuario ou senha invalidos"));
+
+        if (!PasswordHasher.Verify(user.PasswordHash, loginViewModel.Password))
+            return StatusCode(401, new ResultViewModel<string>("06XE04 - Usuario ou senha invalidos"));
+
+        try
+        {
+            var token = tokenService.GenerateToken(user);
+            return Ok(new ResultViewModel<string>(token, null));
+        }
+        catch
+        {
+            return StatusCode(500, new ResultViewModel<string>("06XE05 - Falha interna no servidor"));
+        }
     }
 }
