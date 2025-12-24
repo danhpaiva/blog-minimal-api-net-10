@@ -1,5 +1,7 @@
 ﻿using Blog.Data;
+using Blog.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Controllers;
 
@@ -7,9 +9,9 @@ namespace Blog.Controllers;
 public class CategoryController : ControllerBase
 {
     [HttpGet("v1/categories")]
-    public IActionResult Get([FromServices] AppDbContext context)
+    public async Task<IActionResult> GetAsync([FromServices] AppDbContext context)
     {
-        var categories = context.Categories.ToList();
+        var categories = await context.Categories.ToListAsync();
         return Ok(categories);
     }
 }
