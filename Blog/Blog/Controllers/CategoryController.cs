@@ -1,5 +1,6 @@
 ﻿using Blog.Data;
 using Blog.Models;
+using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,11 +46,18 @@ public class CategoryController : ControllerBase
 
     [HttpPost("v1/categories")]
     public async Task<IActionResult> PostAsync(
-    [FromBody] Category category,
+    [FromBody] CreateCategoryViewModel model,
     [FromServices] AppDbContext context)
     {
         try
         {
+            var category = new Category
+            {
+                Id = 0,
+                Name = model.Name,
+                Slug = model.Slug.ToLower(),
+            };
+
             await context.Categories.AddAsync(category);
             await context.SaveChangesAsync();
 
