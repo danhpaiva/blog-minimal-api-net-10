@@ -1,4 +1,5 @@
 ﻿using Blog.Models;
+using Blog.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
