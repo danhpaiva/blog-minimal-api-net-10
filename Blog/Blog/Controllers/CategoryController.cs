@@ -1,5 +1,6 @@
 ﻿using Blog.Data;
 using Blog.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,5 +14,72 @@ public class CategoryController : ControllerBase
     {
         var categories = await context.Categories.ToListAsync();
         return Ok(categories);
+    }
+
+    [HttpGet("v1/categories/{id:int}")]
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] int id,
+        [FromServices] AppDbContext context)
+    {
+        var category = await context
+            .Categories
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (category == null)
+            return NotFound();
+        return Ok(category);
+    }
+
+    [HttpPost("v1/categories")]
+    public async Task<IActionResult> PostAsync(
+    [FromBody] Category category,
+    [FromServices] AppDbContext context)
+    {
+        await context.Categories.AddAsync(category);
+        await context.SaveChangesAsync();
+
+        return Created($"v1/categories/{category.Id}", category);
+    }
+
+    [HttpPut("v1/categories/{id:int}")]
+    public async Task<IActionResult> PutAsync(
+        [FromRoute] int id,
+        [FromBody] Category model,
+        [FromServices] AppDbContext context)
+    {
+        var category = await context
+              .Categories
+              .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (category == null)
+            return NotFound();
+        
+        category.Name = model.Name;
+        category.Slug = model.Slug;
+
+        context.Categories.Update(category);
+
+        await context.SaveChangesAsync();
+
+        return Ok(category);
+    }
+
+    [HttpDelete("v1/categories/{id:int}")]
+    public async Task<IActionResult> DeleteAsync(
+       [FromRoute] int id,
+       [FromServices] AppDbContext context)
+    {
+        var category = await context
+              .Categories
+              .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (category == null)
+            return NotFound();
+
+        context.Categories.Remove(category);
+
+        await context.SaveChangesAsync();
+
+        return Ok(category);
     }
 }
