@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-
-namespace Blog.Models;
+﻿namespace Blog.Models;
 
 public class Category
 {
