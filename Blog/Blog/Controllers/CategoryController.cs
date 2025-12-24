@@ -15,11 +15,11 @@ public class CategoryController : ControllerBase
         try
         {
             var categories = await context.Categories.ToListAsync();
-            return Ok(categories);
+            return Ok(new ResultViewModel<List<Category>>(categories));
         }
-        catch (Exception e)
+        catch
         {
-            return StatusCode(500, "05XE01 - Falha interna no servidor");
+            return StatusCode(500, new ResultViewModel<List<Category>>("05XE01 - Falha interna no servidor"));
         }
     }
 
@@ -49,6 +49,9 @@ public class CategoryController : ControllerBase
     [FromBody] EditorCategoryViewModel model,
     [FromServices] AppDbContext context)
     {
+        if (!ModelState.IsValid)
+            return BadRequest();
+
         try
         {
             var category = new Category
