@@ -1,4 +1,5 @@
 ﻿using Blog.Data;
+using Blog.Extensions;
 using Blog.Models;
 using Blog.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -51,7 +52,7 @@ public class CategoryController : ControllerBase
     [FromServices] AppDbContext context)
     {
         if (!ModelState.IsValid)
-            return BadRequest();
+            return BadRequest(new ResultViewModel<Category>(ModelState.GetErrors()));
 
         try
         {
