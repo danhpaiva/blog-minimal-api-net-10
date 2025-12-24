@@ -35,12 +35,13 @@ public class CategoryController : ControllerBase
             .FirstOrDefaultAsync(c => c.Id == id);
 
             if (category == null)
-                return NotFound();
-            return Ok(category);
+                return NotFound(new ResultViewModel<Category>("Conteudo nao encontrado."));
+
+            return Ok(new ResultViewModel<Category>(category));
         }
-        catch (Exception e)
+        catch
         {
-            return StatusCode(500, "05XE02 - Falha interna no servidor");
+            return StatusCode(500, new ResultViewModel<Category>("05XE02 - Falha interna no servidor"));
         }
     }
 
