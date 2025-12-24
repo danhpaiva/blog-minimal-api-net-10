@@ -46,7 +46,7 @@ public class CategoryController : ControllerBase
 
     [HttpPost("v1/categories")]
     public async Task<IActionResult> PostAsync(
-    [FromBody] CreateCategoryViewModel model,
+    [FromBody] EditorCategoryViewModel model,
     [FromServices] AppDbContext context)
     {
         try
@@ -76,7 +76,7 @@ public class CategoryController : ControllerBase
     [HttpPut("v1/categories/{id:int}")]
     public async Task<IActionResult> PutAsync(
         [FromRoute] int id,
-        [FromBody] Category model,
+        [FromBody] EditorCategoryViewModel model,
         [FromServices] AppDbContext context)
     {
         try
