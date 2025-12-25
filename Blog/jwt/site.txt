@@ -1,0 +1,18 @@
+
+https://www.jwt.io/
+
+JWT
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN1cGVybWFuc0BiYWx0YS5pbyIsInJvbGUiOlsidXNlciIsImF1dGhvciIsImFkbWluIl0sIm5iZiI6MTc2NjYyMTQxMywiZXhwIjoxNzY2NjI1MDEzLCJpYXQiOjE3NjY2MjE0MTN9.pXFMK7KE6S1UKUD8lsUU9hKVGrGpguhxu435lty23cQ
+
+Decoded Payload
+{
+  "unique_name": "supermans@balta.io",
+  "role": [
+    "user",
+    "author",
+    "admin"
+  ],
+  "nbf": 1766621413,
+  "exp": 1766625013,
+  "iat": 1766621413
+}
