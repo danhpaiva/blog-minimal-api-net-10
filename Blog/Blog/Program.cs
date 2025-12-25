@@ -73,6 +73,7 @@ void ConfigureServices(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<AppDbContext>();
     builder.Services.AddTransient<TokenService>();
+    builder.Services.AddTransient<EmailService>();
 
     builder.Services.AddOpenApi();
 }
