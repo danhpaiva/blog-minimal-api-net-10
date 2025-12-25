@@ -14,6 +14,7 @@ public class AccountController : ControllerBase
     [HttpPost("v1/accounts/")]
     public async Task<IActionResult> PostAsync(
         [FromBody] RegisterViewModel registerViewModel,
+        [FromServices] EmailService emailService,
         [FromServices] AppDbContext context)
     {
         if (!ModelState.IsValid)
@@ -34,9 +35,18 @@ public class AccountController : ControllerBase
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
 
+            emailService.Send(
+                user.Name,
+                user.Email,
+                "Bem vindo ao Blog!",
+                $"Sua senha é {password}"
+            );
+
             return Ok(new ResultViewModel<dynamic>(new
             {
                 user = user.Email,
+                //Somente para testar mandando o password no retorno da api.
+                //Nao fazer isso em producao.
                 password
             }));
         }
