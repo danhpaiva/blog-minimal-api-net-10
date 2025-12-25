@@ -2,6 +2,7 @@ using Blog;
 using Blog.Data;
 using Blog.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -74,7 +75,11 @@ void ConfigureMvc(WebApplicationBuilder builder)
 
 void ConfigureServices(WebApplicationBuilder builder)
 {
-    builder.Services.AddDbContext<AppDbContext>();
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    builder
+        .Services
+        .AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(connectionString));
     builder.Services.AddTransient<TokenService>();
     builder.Services.AddTransient<EmailService>();
 
