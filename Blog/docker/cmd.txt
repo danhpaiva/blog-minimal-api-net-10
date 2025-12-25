@@ -1,3 +1,5 @@
+-- Popular banco
+
 docker exec -i sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1q2w3e4r@#$" -d BlogApi -C -Q "
 INSERT INTO [Category] VALUES('Backend', 'backend')
 INSERT INTO [Category] VALUES('Frontend', 'frontend')
@@ -32,6 +34,7 @@ INSERT INTO [UserRole] VALUES(3, 1)
 INSERT INTO [UserRole] VALUES(3, 2)
 "
 
+-- Ver usuarios
 
 docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1q2w3e4r@#$" -d BlogApi -C -W -Q "SELECT [Id]
       ,[Name]
@@ -40,3 +43,19 @@ docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1
       ,[Bio]
       ,[Image]
       ,[Slug] FROM [User]"
+	  
+-- Ver regras/roles
+
+docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1q2w3e4r@#$" -d BlogApi -C -W -Q "SELECT TOP (1000) [Id], [Name], [Slug] FROM [Role]"
+
+-- Ver regras aplicadas aos usuarios:
+
+docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1q2w3e4r@#$" -d BlogApi -C -W -Q "SELECT TOP (1000) [UserId], [RoleId] FROM [UserRole]"
+
+-- Cadastrando roles para um novo usuario:
+
+docker exec -i sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1q2w3e4r@#$" -d BlogApi -C -Q "
+INSERT INTO [UserRole] ([UserId], [RoleId]) VALUES (11, 1);
+INSERT INTO [UserRole] ([UserId], [RoleId]) VALUES (11, 2);
+INSERT INTO [UserRole] ([UserId], [RoleId]) VALUES (11, 3);
+"
