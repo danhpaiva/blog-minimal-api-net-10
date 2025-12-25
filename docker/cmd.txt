@@ -59,3 +59,7 @@ INSERT INTO [UserRole] ([UserId], [RoleId]) VALUES (11, 1);
 INSERT INTO [UserRole] ([UserId], [RoleId]) VALUES (11, 2);
 INSERT INTO [UserRole] ([UserId], [RoleId]) VALUES (11, 3);
 "
+
+-- Deletar usuario
+
+docker exec -it sqlserver /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "1q2w3e4r@#$" -d BlogApi -C -W -Q "DELETE FROM [User] WHERE [Id] = 1"

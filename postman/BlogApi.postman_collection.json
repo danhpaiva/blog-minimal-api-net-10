@@ -1,0 +1,303 @@
+{
+	"info": {
+		"_postman_id": "43844cba-7f6f-4aa0-b253-2a03376ccf4f",
+		"name": "BlogApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13392935",
+		"_collection_link": "https://danhpaiva.postman.co/workspace/Team-Workspace~f5013f72-0ab0-456c-8ab7-2ecc1298fff8/collection/13392935-43844cba-7f6f-4aa0-b253-2a03376ccf4f?action=share&source=collection_link&creator=13392935"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"email\": \"supermans@balta.io\",\r\n        \"password\": \"{1v[4ZBBK77!dOwG2BrwA2&UG\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/accounts/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"danpaiva@live.com\",\r\n    \"name\" : \"daniel paivaa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/accounts",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRhbmllbHBhaXZhIiwicm9sZSI6WyJ1c2VyIiwiYWRtaW4iXSwiZnJ1dGEiOiJhYmFjYXhpIiwibmJmIjoxNzY2NjE0NzQzLCJleHAiOjE3NjY2MTgzNDMsImlhdCI6MTc2NjYxNDc0M30.jmsJLvgHgnIUrjkK_Lm1n8ioDYNlies6W9TEyJ_bRuk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/v1/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "author",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRhbmllbHBhaXZhIiwicm9sZSI6WyJ1c2VyIiwiYWRtaW4iXSwiZnJ1dGEiOiJhYmFjYXhpIiwibmJmIjoxNzY2NjE0NzQzLCJleHAiOjE3NjY2MTgzNDMsImlhdCI6MTc2NjYxNDc0M30.jmsJLvgHgnIUrjkK_Lm1n8ioDYNlies6W9TEyJ_bRuk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/v1/author",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"author"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRhbmllbHBhaXZhIiwicm9sZSI6WyJ1c2VyIiwiYWRtaW4iXSwiZnJ1dGEiOiJhYmFjYXhpIiwibmJmIjoxNzY2NjE0NzQzLCJleHAiOjE3NjY2MTgzNDMsImlhdCI6MTc2NjYxNDc0M30.jmsJLvgHgnIUrjkK_Lm1n8ioDYNlies6W9TEyJ_bRuk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/v1/admin",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Criar Categoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"\",\r\n    \"slug\" : \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Categorias",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/v1/categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar CategoriaById",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/v1/categories/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Categoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 1,\r\n    \"name\" : \"Back-end\",\r\n    \"slug\" : \"Back-end\",\r\n    \"posts\" : []\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/categories/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Categoria",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/v1/categories/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
