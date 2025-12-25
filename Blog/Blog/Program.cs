@@ -7,42 +7,12 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false
-    };
-});
-
-builder.Services.AddControllers()
-    .ConfigureApiBehaviorOptions( options =>
-    {
-        options.SuppressModelStateInvalidFilter = true;
-    });
-
-builder.Services.AddDbContext<AppDbContext>();
-builder.Services.AddTransient<TokenService>();
-
-builder.Services.AddOpenApi();
+ConfigureAuthentication(builder);
+ConfigureMvc(builder);
+ConfigureServices(builder);
 
 var app = builder.Build();
-
-Configuration.JwtKey = app.Configuration.GetValue<string>("JwtKey");
-
-var smtp = new Configuration.SmtpConfiguration();
-app.Configuration.GetSection("Smtp").Bind(smtp);
-Configuration.Smtp = smtp;
+LoadConfiguration(app);
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -57,3 +27,52 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.Run();
+
+void LoadConfiguration(WebApplication app)
+{
+    Configuration.JwtKey = app.Configuration.GetValue<string>("JwtKey");
+
+    var smtp = new Configuration.SmtpConfiguration();
+    app.Configuration.GetSection("Smtp").Bind(smtp);
+    Configuration.Smtp = smtp;
+}
+
+void ConfigureAuthentication(WebApplicationBuilder builder)
+{
+    var key = Encoding.ASCII.GetBytes(Configuration.JwtKey);
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+}
+
+void ConfigureMvc(WebApplicationBuilder builder)
+{
+    builder
+    .Services
+    .AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
+}
+
+void ConfigureServices(WebApplicationBuilder builder)
+{
+    builder.Services.AddDbContext<AppDbContext>();
+    builder.Services.AddTransient<TokenService>();
+
+    builder.Services.AddOpenApi();
+}
