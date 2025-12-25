@@ -9,7 +9,7 @@ public class EmailService
         string subject,
         string body,
         string fromName = "Daniel Paiva",
-        string fromEmail = "email@gmail.com")
+        string fromEmail = "email@gmail.com") //aqui precisa ser um email valido
     {
         SmtpClient smtpClient = new(Configuration.Smtp.Host, Configuration.Smtp.Port);
 
