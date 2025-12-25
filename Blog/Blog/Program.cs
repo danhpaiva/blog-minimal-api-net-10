@@ -38,6 +38,12 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+Configuration.JwtKey = app.Configuration.GetValue<string>("JwtKey");
+
+var smtp = new Configuration.SmtpConfiguration();
+app.Configuration.GetSection("Smtp").Bind(smtp);
+Configuration.Smtp = smtp;
+
 app.UseAuthentication();
 app.UseAuthorization();
 
