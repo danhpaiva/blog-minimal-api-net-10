@@ -1,4 +1,5 @@
 ﻿using Blog.Data;
+using Blog.ViewModels.Posts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,22 @@ public class PostController : ControllerBase
     public async Task<IActionResult> GetAsync(
         [FromServices] AppDbContext context)
     {
-        return Ok(await context.Posts.ToListAsync());
+        var posts = await context
+            .Posts
+            .AsNoTracking()
+            .Include(p => p.Category)
+            .Include(p => p.Author)
+            .Select(
+            p => new ListPostsViewModel
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Slug = p.Slug,
+                LastUpdateDate = p.LastUpdateDate,
+                Category = p.Category.Name,
+                Author = p.Author.Name
+            })
+            .ToListAsync();
+        return Ok(posts);
     }
 }
